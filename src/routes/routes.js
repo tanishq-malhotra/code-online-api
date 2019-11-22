@@ -32,14 +32,15 @@ export const apiRoutes = async router => {
 
   router.post("/get-data", async (req, res) => {
     const code = req.body.info.code;
-    const input = req.body.info.input;
+    const input = req.body.info.input.split("\n");
+
     let p = path.join(__dirname, "../../files/t.c++");
-    fs.appendFile(p, code, (err) => {
-      if(err) throw err;
+    fs.appendFile(p, code, err => {
+      if (err) throw err;
     });
-    
+
     let compile = spawn("g++", [p]);
-    let out = '';
+    let out = "";
     compile.stderr.on("data", async data => {
       out += data;
     });
@@ -47,23 +48,21 @@ export const apiRoutes = async router => {
       if (data === 0) {
         let run = spawn("./a.exe", []);
 
-        
+        [...input].forEach(e => run.stdin.write(e+" "));
         // run.stdin.write("" + req.body.n1 + " " + req.body.n2);
-        // run.stdin.end();
+        run.stdin.end();
         run.stdout.on("data", output => {
-          fs.unlink(p, (err) => {
-            if(err) throw err;
-          })
+          fs.unlink(p, err => {
+            if (err) throw err;
+          });
           res.send(out + String(output));
         });
-      } else 
-          {
-            fs.unlink(p, err => {
-              if (err) throw err;
-            });
-            res.send(out);
-          }
+      } else {
+        fs.unlink(p, err => {
+          if (err) throw err;
+        });
+        res.send(out);
+      }
     });
-
   });
 };
