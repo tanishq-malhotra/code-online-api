@@ -3,9 +3,9 @@ import path from 'path';
 import fs from 'fs';
 
 export const compileCpp = (router) => {
-    router.get('/compile-cpp', async (req, res) => {
-        const code = req.query.code;
-        const input = req.query.input.split('\n');
+    router.post('/compile-cpp', async (req, res) => {
+        const code = req.body.code;
+        const input = req.body.input.split('\n');
         const timeStamp = req.body.timeStamp;
         const p = path.join(__dirname, '../../../files/' + timeStamp + '.cpp');
         const filePath = path.join(__dirname, '../../../files/' + timeStamp + '.out');
