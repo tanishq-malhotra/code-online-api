@@ -1,29 +1,29 @@
-import express from "express";
-import { errorHandler, undefinedRouteHandler } from "./middlewares";
-import path from "path";
+import express from 'express';
+import {errorHandler, undefinedRouteHandler} from './middlewares';
+import path from 'path';
 
 class App {
-  constructor() {
-    this.express = express();
-    this.router = express.Router();
-  }
+    constructor() {
+        this.express = express();
+        this.router = express.Router();
+    }
 
-  mountRoutes(routes) {
-    routes(this.router);
-  }
+    mountRoutes(routes) {
+        routes(this.router);
+    }
 
-  start(port) {
-    const app = this.express;
+    start(port) {
+        const app = this.express;
 
-    app.use("/", this.router);
-    app.use(express.static(path.join(__dirname, "../files")));
-    app.use(undefinedRouteHandler);
-    app.use(errorHandler);
+        app.use('/', this.router);
+        app.use(express.static(path.join(__dirname, '../files')));
+        app.use(undefinedRouteHandler);
+        app.use(errorHandler);
 
-    app.listen(port, () => {
-      console.log("server started on port:" + port);
-    });
-  }
+        app.listen(port, () => {
+            console.log('server started on port:' + port);
+        });
+    }
 }
 
 export default new App();
