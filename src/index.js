@@ -5,17 +5,17 @@ import app from "./app";
 import { ENV } from "./config";
 const { NODE_ENV, PORT } = ENV;
 import { apiRoutes } from "./routes";
+import {compileCpp} from './routes';
 import cors from "cors";
 
 app.express.use(cors());
 app.express.use(bodyParser.json());
 app.express.use(bodyParser.urlencoded({ extended: true }));
 
-if (NODE_ENV == "developer") {
-  app.express.use(logger("dev"));
-}
+app.express.use(logger("dev"));
 
 (async () => {
   app.mountRoutes(apiRoutes);
+  app.mountRoutes(compileCpp);
   app.start(PORT);
 })();
