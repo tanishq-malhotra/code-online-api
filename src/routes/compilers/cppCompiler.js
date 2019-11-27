@@ -29,16 +29,12 @@ export const compileCpp = router => {
         [...input].forEach(e => run.stdin.write(e + " "));
         run.stdin.end();
         run.stdout.on("data", async output => {
-          fs.unlink(p, err => {
-            if (err) throw err;
-          });
-          fs.unlink(filePath, err => {
-            if (err) throw err;
-          });
-
-          res.send(String(output));s
+          res.send(String(output));
         });
-      } else res.send("error");
+      } else {
+        res.send("error");
+        return;
+      }
     });
   });
 };
