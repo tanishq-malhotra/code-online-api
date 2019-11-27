@@ -32,7 +32,7 @@ export const compileCpp = router => {
           res.send(String(output));
         });
       } else {
-        res.send("error");
+        res.send("error in  code");
         return;
       }
     });
