@@ -98,7 +98,12 @@ export const gpp = (fileName, filePath, options, extension) => {
                   delCommand +
                   " " +
                   fileName +
-                  outExtension,
+                  outExtension +
+                  " " +
+                  delCommand +
+                  " " +
+                  fileName +
+                  extension,
                 () => {}
               );
             }

@@ -15,6 +15,5 @@ app.express.use(logger('dev'));
 
 (async () => {
     app.mountRoutes(apiRoutes);
-    app.mountRoutes(compileCpp);
     app.start(PORT);
 })();

@@ -34,9 +34,6 @@ export const codeCompiler = async (code, options) => {
       if (err) throw err;
       try {
         const output = await compiler(fileName, filePath, options, extension);
-        fs.unlink(filePath + fileName + extension, err => {
-          if (err) throw err;
-        });
         resolve(output);
       } catch (err) {
         resolve(err);

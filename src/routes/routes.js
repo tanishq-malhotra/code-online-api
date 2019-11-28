@@ -7,7 +7,6 @@ export const apiRoutes = async router => {
   });
   router.post("/compile", async (req, res) => {
     const code = req.body.params.code;
-    const input = req.body.params.input.split("\n");
     const options = {
       fileName: req.body.params.timeStamp,
       input: req.body.params.input,
