@@ -10,11 +10,15 @@ export const apiRoutes = async router => {
     const input = req.body.params.input.split("\n");
     const options = {
       fileName: req.body.params.timeStamp,
-      input:  req.body.params.input,
+      input: req.body.params.input,
       language: req.body.params.language,
       timeout: req.body.params.timeout
     };
-    const output = await codeCompiler(code, options);
-    res.send(output);
+    try {
+      const output = await codeCompiler(code, options);
+      res.send(output);
+    } catch (err) {
+      res.send(err);
+    }
   });
 };
