@@ -17,7 +17,7 @@ export const apiRoutes = async (router) => {
             const output = await codeCompiler(code, options);
             res.send(output);
         } catch (err) {
-            res.send(err);
+            res.send(err.message);
         }
     });
 };
