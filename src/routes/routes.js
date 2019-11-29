@@ -1,23 +1,38 @@
-import {codeCompiler} from '../code-compiler';
+import {DockerSandbox, compilers} from '../code-compiler';
+import {randomBytes} from 'crypto';
+import path from 'path';
 
 export const apiRoutes = async (router) => {
     // default welcome route
     router.get('/', async (req, res) => {
         res.send('Compiler-API');
     });
+
     router.post('/compile', async (req, res) => {
-        const code = req.body.params.code;
-        const options = {
-            fileName: req.body.params.timeStamp,
-            input: req.body.params.input,
-            language: req.body.params.language,
-            timeout: req.body.params.timeout,
+        const language = req.body.language;
+        const code = req.body.code;
+        const input = req.body.input;
+
+        const query = {
+            timeout_value: 20,
+            path: path.resolve(__dirname, '..') + '/',
+            folder: 'temp/' + randomBytes(10).toString('hex'),
+            vm_name: 'docker_machine',
+            compiler_name: compilers[language].compiler_name,
+            file_name: compilers[language].file_name,
+            code: code,
+            output_command: compilers[language].output_command,
+            languageName: language,
+            e_arguments: compilers[language].e_arguments,
+            stdin_data: input,
         };
-        try {
-            const output = await codeCompiler(code, options);
-            res.send(output);
-        } catch (err) {
-            res.send(err);
-        }
+
+        const sandbox = new DockerSandbox(query);
+
+        sandbox.run((data, exec_time, err) => {
+            res.json({output: data,
+                errors: err,
+                time: exec_time});
+        });
     });
 };

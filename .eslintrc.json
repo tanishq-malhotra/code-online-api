@@ -19,6 +19,7 @@
         "max-len": "off",
         "new-cap":"off",
         "require-jsdoc":"off",
-        "no-unused-vars":"off"
+        "no-unused-vars":"off",
+        "camelcase":"off"
     }
 }
