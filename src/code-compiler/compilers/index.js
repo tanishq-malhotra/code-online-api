@@ -1,1 +1,1 @@
-export { gpp } from "./gpp";
+export {gpp} from './gpp';
