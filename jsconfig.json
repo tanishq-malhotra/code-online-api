@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "es2015",
+        "target": "es6",
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*"],
+            "@app/*": ["./src/*"],
+            "@compiler": ["./src/code-compiler/*"],
+            "@config/*": ["./src/config/*"],
+            "@middlewares/*": ["./src/middlewares/*"],
+            "@routes/*": ["./src/routes/*"]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

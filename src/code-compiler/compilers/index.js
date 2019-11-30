@@ -1,1 +1,0 @@
-export {gpp} from './gpp';

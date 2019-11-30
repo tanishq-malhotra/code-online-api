@@ -8,5 +8,19 @@
         }
       }
     ]
-  ]
+  ],
+  "plugins": [
+    [
+        "module-resolver",
+        {
+            "alias": {
+                "@app": "./src",
+                "@compiler": "./src/code-compiler",
+                "@config": "./src/config",
+                "@middlewares": "./src/middlewares",
+                "@routes": "./src/routes"
+            }
+        }
+    ]
+]
 }
