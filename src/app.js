@@ -2,7 +2,6 @@ import express from 'express';
 
 import http from 'http';
 import {errorHandler, undefinedRouteHandler} from '@middlewares/index';
-import path from 'path';
 import io from 'socket.io';
 
 class App {
@@ -21,7 +20,6 @@ class App {
         const app = this.express;
 
         app.use('/', this.router);
-        app.use(express.static(path.join(__dirname, '../files')));
         app.use(undefinedRouteHandler);
         app.use(errorHandler);
 
