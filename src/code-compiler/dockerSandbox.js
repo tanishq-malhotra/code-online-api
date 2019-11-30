@@ -1,6 +1,9 @@
 import {exec} from 'child_process';
 import fs from 'fs';
 
+/**
+ * DockerSandbox create a sandbox docker container
+ */
 export class DockerSandbox {
     constructor({
         timeout_value,
@@ -66,7 +69,6 @@ export class DockerSandbox {
 
             fs.readFile(`${dirPath}/completed`, 'utf8', (err_main, data_main) => {
                 if (err_main && counter < this.timeout_value) {
-                    console.log(err_main);
                     return;
                 } else if (counter < this.timeout_value) {
                     fs.readFile(`${dirPath}/errors`, 'utf8', (err_fail, data_fail) => {

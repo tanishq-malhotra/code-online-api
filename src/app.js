@@ -1,5 +1,5 @@
 import express from 'express';
-import {errorHandler, undefinedRouteHandler} from './middlewares';
+import {errorHandler, undefinedRouteHandler} from '@middlewares/index';
 import path from 'path';
 
 class App {

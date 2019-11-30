@@ -8,6 +8,7 @@
     "build": "npx babel src --out-dir dist --ignore 'node_modules/**/*' --copy-files",
     "watch": "npx nodemon --exec babel-node ./src",
     "start": "node dist",
+    "setup": "cd docker && sh install.sh",
     "style": "npx eslint --fix src",
     "clean": "rm -rf ./src/temp/*"
   },
@@ -26,6 +27,7 @@
     "@babel/core": "^7.6.4",
     "@babel/node": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
+    "babel-plugin-module-resolver": "^3.2.0",
     "eslint": "^6.7.1",
     "eslint-config-google": "^0.14.0",
     "nodemon": "^1.19.4"
