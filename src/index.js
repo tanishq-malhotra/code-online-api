@@ -15,7 +15,6 @@ app.express.use(bodyParser.urlencoded({extended: true}));
 app.express.use(logger('dev'));
 
 app.io.on('connection', async (socket) => {
-    console.log('client connected');
     socket.on('compile', async (req) => {
         const code = req.code;
         const options = {
@@ -26,6 +25,7 @@ app.io.on('connection', async (socket) => {
         };
         try {
             const output = await codeCompiler(code, options);
+		console.log("client "+req.params.id+" handled");
             socket.emit(req.params.id, output);
         } catch (err) {}
     });
