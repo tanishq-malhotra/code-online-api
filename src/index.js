@@ -25,7 +25,6 @@ app.express.use(bodyParser.urlencoded({extended: true}));
 app.express.use(logger('dev'));
 
 app.io.on('connection', async (socket) => {
-    console.log('client connected');
     socket.on('compile', async (req) => {
         const language = req.params.language;
         const code = req.params.code;
@@ -44,9 +43,11 @@ app.io.on('connection', async (socket) => {
             stdin_data: input,
         };
 
+
         const sandbox = new DockerSandbox(query);
         sandbox.run((data, exec_time, err) => {
             const output = {output: data, exec_time: exec_time, err: err};
+
             socket.emit(req.params.id, output);
         });
     });
