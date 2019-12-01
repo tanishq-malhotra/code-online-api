@@ -61,7 +61,6 @@ export class DockerSandbox {
 
         const cmd = `sh '${run}' ${this.timeout_value} -i -t -v '${dirPath}':/usercode ${this.vm_name} /usercode/script.sh ${this.compiler_name} ${this.file_name} ${this.output_command} ${this.extra_arguments}`;
 
-
         exec(cmd, (err) => {
             if (err) {
                 throw err;
