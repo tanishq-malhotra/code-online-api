@@ -37,7 +37,7 @@ export class DockerSandbox {
         const inputFile = `${dirPath}/inputFile`;
         const payload = __dirname + '/payload';
 
-        exec(`mkdir '${dirPath}' && cp -r '${payload}'/* '${dirPath}'`,
+        exec(`mkdir '${dirPath}' && cp -r '${payload}'/* '${dirPath}' && chmod 777 '${dirPath}'`,
             (_err, _stdout, _stderr) => {
                 fs.writeFile(filePath, this.code, (err) => {
                     if (err) {
@@ -61,9 +61,10 @@ export class DockerSandbox {
 
         const cmd = `sh '${run}' ${this.timeout_value} -i -t -v '${dirPath}':/usercode ${this.vm_name} /usercode/script.sh ${this.compiler_name} ${this.file_name} ${this.output_command} ${this.extra_arguments}`;
 
-
         exec(cmd, (err) => {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
         });
 
         let counter = 0;
