@@ -9,9 +9,9 @@ export const apiRoutes = async (router) => {
     });
 
     router.post('/compile', async (req, res) => {
-        const language = req.body.params.language;
-        const code = req.body.params.code;
-        const input = req.body.params.input;
+        const language = req.body.language;
+        const code = req.body.code;
+        const input = req.body.input;
 
 
         const query = {
