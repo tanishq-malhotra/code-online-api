@@ -14,7 +14,7 @@ export const apiRoutes = async (router) => {
         const input = req.body.input;
 
         const query = {
-            timeout_value: 20,
+            timeout_value: 5,
             path: path.resolve(__dirname, '..') + '/',
             folder: 'temp/' + randomBytes(10).toString('hex'),
             vm_name: 'docker_machine',
