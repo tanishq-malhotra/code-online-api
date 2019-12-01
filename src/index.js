@@ -6,15 +6,18 @@ import {ENV} from '@config/index';
 
 import {apiRoutes} from '@routes/index';
 import cors from 'cors';
-import {codeCompiler} from './code-compiler';
+import {DockerSandbox, compilers} from './code-compiler';
+import {randomBytes} from 'crypto';
 
 const {PORT} = ENV;
 
-app.express.use(cors({
-    origin: '*',
-    credentials: true,
-    optionsSuccessStatus: 200,
-}));
+app.express.use(
+    cors({
+        origin: '*',
+        credentials: true,
+        optionsSuccessStatus: 200,
+    }),
+);
 
 app.express.use(bodyParser.json());
 app.express.use(bodyParser.urlencoded({extended: true}));
@@ -24,17 +27,28 @@ app.express.use(logger('dev'));
 app.io.on('connection', async (socket) => {
     console.log('client connected');
     socket.on('compile', async (req) => {
-        const code = req.code;
-        const options = {
-            fileName: req.params.id,
-            input: req.params.input,
-            language: req.params.language,
-            timeout: req.params.timeout,
+        const language = req.params.language;
+        const code = req.params.code;
+        const input = req.params.input;
+        const query = {
+            timeout_value: 5,
+            path: __dirname + '/',
+            folder: 'temp/' + randomBytes(10).toString('hex'),
+            vm_name: 'docker_machine',
+            compiler_name: compilers[language].compiler_name,
+            file_name: compilers[language].file_name,
+            code: code,
+            output_command: compilers[language].output_command,
+            languageName: language,
+            e_arguments: compilers[language].e_arguments,
+            stdin_data: input,
         };
-        try {
-            const output = await codeCompiler(code, options);
+
+        const sandbox = new DockerSandbox(query);
+        sandbox.run((data, exec_time, err) => {
+            const output = {output: data, exec_time: exec_time, err: err};
             socket.emit(req.params.id, output);
-        } catch (err) {}
+        });
     });
 });
 
