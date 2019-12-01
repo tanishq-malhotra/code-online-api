@@ -61,7 +61,9 @@ export class DockerSandbox {
 
         const cmd = `sh '${run}' ${this.timeout_value} -i -t -v '${dirPath}':/usercode ${this.vm_name} /usercode/script.sh ${this.compiler_name} ${this.file_name} ${this.output_command} ${this.extra_arguments}`;
 
-        exec(cmd);
+        exec(cmd, (err) => {
+            if (err) throw err;
+        });
 
         let counter = 0;
         const intid = setInterval(() => {
