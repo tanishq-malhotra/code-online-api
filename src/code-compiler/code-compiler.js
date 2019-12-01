@@ -19,11 +19,11 @@ export const codeCompiler = async (code, options) => {
     return new Promise((resolve, reject) => {
         if (!options) {
             reject(new Error('no options provided'));
-            return;
+            
         }
         if (!file_types[options.language]) {
             reject(new Error('unknown language'));
-            return;
+            
         }
         options.input = options.input || '';
         // options.timeout = options.timeout || 100;
