@@ -8,9 +8,9 @@
     "build": "npx babel src --out-dir dist --ignore 'node_modules/**/*' --copy-files",
     "watch": "npx nodemon --exec babel-node ./src",
     "start": "node dist",
-    "setup": "cd docker && sh install.sh",
+    "setup": "sh setup.sh",
     "style": "npx eslint --fix src",
-    "clean": "rm -rf ./src/temp/*"
+    "clean": "rm -rf `find ./src/temp/ | grep -vw './src/temp/temp\\|./src/temp/'`"
   },
   "author": "Tanishq-Malhotra",
   "license": "ISC",
