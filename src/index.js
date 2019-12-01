@@ -42,14 +42,12 @@ app.io.on('connection', async (socket) => {
             e_arguments: compilers[language].e_arguments,
             stdin_data: input,
         };
-
-
         const sandbox = new DockerSandbox(query);
         sandbox.run((data, exec_time, err) => {
-            const output = {output: data, exec_time: exec_time, err: err};
-
-            socket.emit(req.params.id, output);
-        });
+        const output = {output: data, exec_time: exec_time, err: err};
+		console.log("client "+req.params.id+" handled");
+        socket.emit(req.params.id, output);
+        
     });
 });
 
