@@ -8,6 +8,7 @@ import {apiRoutes} from '@routes/index';
 import cors from 'cors';
 import {DockerSandbox, compilers} from './code-compiler';
 import {randomBytes} from 'crypto';
+import {connect} from './mongo';
 
 const {PORT} = ENV;
 
@@ -21,7 +22,6 @@ app.express.use(
 
 app.express.use(bodyParser.json());
 app.express.use(bodyParser.urlencoded({extended: true}));
-
 app.express.use(logger('dev'));
 
 app.io.on('connection', async (socket) => {
@@ -56,4 +56,5 @@ app.io.on('disconnect', (socket) => console.log(socket.id + ' disconnected'));
 (async () => {
     app.mountRoutes(apiRoutes);
     app.start(PORT);
+    connect();
 })();
