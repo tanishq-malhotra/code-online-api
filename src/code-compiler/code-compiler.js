@@ -24,7 +24,7 @@ export const codeCompiler = async (code, options) => {
             reject(new Error('unknown language'));
         }
         options.input = options.input || '';
-        // options.timeout = options.timeout || 100;
+        options.timeout = options.timeout || 100;
         const fileName = options.fileName;
         const extension = '.' + file_types[options.language].extension;
         const compiler = file_types[options.language].compiler;
