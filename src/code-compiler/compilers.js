@@ -12,5 +12,5 @@ function createOptions(compiler_name, file_name, output_command, e_arguments) {
 
 export const compilers = {
     'C': createOptions(`'gcc -o /usercode/a.out'`, 'main.c', `'./usercode/a.out'`, ''),
-    'C++': createOptions(`'g++ -o /usercode/a.out'`, 'main.cpp', `'./usercode/a.out'`, ''),
+    'C++': createOptions(`'g++ -o /usercode/a.out'`, '*.cpp', `'./usercode/a.out'`, ''),
 };
