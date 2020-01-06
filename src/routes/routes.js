@@ -48,7 +48,9 @@ export const apiRoutes = async (router) => {
             })
             .then((data) => {
                 if (data.length) {
-                    res.send('done');
+                    const temp = {};
+                    temp.id = data[0].id; temp.name = data[0].name;
+                    res.send(temp);
                 } else res.send('nope');
             })
             .catch((err) => {
