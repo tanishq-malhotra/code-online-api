@@ -1,2 +1,2 @@
 export {connect} from './connect';
-export {userSchema} from './models';
+export {userSchema, projectSchema} from './models';
