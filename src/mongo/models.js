@@ -3,7 +3,9 @@ import {model, Schema} from 'mongoose';
 const projectschema = Schema({
     id: String,
     name: String,
-    path: String,
+    dateOfCreation: String,
+    lastEdited: String,
+    language: String,
 });
 
 const userschema = Schema({
