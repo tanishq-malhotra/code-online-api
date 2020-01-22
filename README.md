@@ -5,7 +5,6 @@
 
 
 ## Code online is a online coding platform where you can
-
 + Create your Projects
 + Explore you projects
 + Add multiple contributers to your project
