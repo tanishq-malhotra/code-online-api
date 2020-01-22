@@ -42,6 +42,6 @@
 + Various Editor changes
 + GitHub Integration for easier repo clone
 + Google Authentication
-+ and much more
++ Mobile Application for project management anytime anywhere..
 
 ## [Frontend of this project](https://github.com/tanishq-malhotra/code-online-web)
