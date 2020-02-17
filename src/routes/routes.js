@@ -2,6 +2,7 @@ import {randomBytes} from 'crypto';
 import {userSchema, projectSchema} from '../mongo';
 import fs from 'fs';
 import path from 'path';
+import {exec} from 'child_process';
 
 export const apiRoutes = async (router) => {
     // default welcome route
@@ -9,6 +10,7 @@ export const apiRoutes = async (router) => {
         res.send('Compiler-API');
     });
 
+    // user register route
     router.post('/register', async (req, res) => {
         const {name, email, pass, gender, age, about} = req.body.data;
         const id = randomBytes(10).toString('hex');
@@ -38,6 +40,7 @@ export const apiRoutes = async (router) => {
             });
     });
 
+    // user login route
     router.post('/login', async (req, res) => {
         const {email, pass} = req.body.data;
 
@@ -64,42 +67,44 @@ export const apiRoutes = async (router) => {
             });
     });
 
-    router.post('/add', async (req, res) => {
-        const {
-            userId,
-            userName,
-            projectName,
-            type,
-            typeName,
-            typePath,
-        } = req.body;
+    // create directory or file
+    // router.post('/add', async (req, res) => {
+    //     const {
+    //         userId,
+    //         userName,
+    //         projectName,
+    //         type,
+    //         typeName,
+    //         typePath,
+    //     } = req.body;
 
-        if (type === 'dir') {
-            const dirPath = path.join(
-                __dirname,
-                '../../files/' + userId + userName.split(' ')[0],
-                typePath,
-                typeName,
-            );
-            fs.mkdirSync(dirPath, {recursive: true}, (err) => {
-                if (err) throw err;
-            });
-            res.send('dir created');
-        } else {
-            const filePath = path.join(
-                __dirname,
-                '../../files/' + userId + userName.split(' ')[0],
-                typePath,
-                typeName,
-            );
+    //     if (type === 'dir') {
+    //         const dirPath = path.join(
+    //             __dirname,
+    //             '../../files/' + userId + userName.split(' ')[0],
+    //             typePath,
+    //             typeName,
+    //         );
+    //         fs.mkdirSync(dirPath, {recursive: true}, (err) => {
+    //             if (err) throw err;
+    //         });
+    //         res.send('dir created');
+    //     } else {
+    //         const filePath = path.join(
+    //             __dirname,
+    //             '../../files/' + userId + userName.split(' ')[0],
+    //             typePath,
+    //             typeName,
+    //         );
 
-            fs.writeFile(filePath, '', (err) => {
-                if (err) throw err;
-                res.send('file created');
-            });
-        }
-    });
+    //         fs.writeFile(filePath, '', (err) => {
+    //             if (err) throw err;
+    //             res.send('file created');
+    //         });
+    //     }
+    // });
 
+    // user create project route
     router.post('/create-project', async (req, res) => {
         const {name, id, projectName, lang} = req.body.data;
         const dirPath = path.join(
@@ -134,6 +139,7 @@ export const apiRoutes = async (router) => {
             });
     });
 
+    // route to get all the user projects
     router.get('/get-user-projects', async (req, res) => {
         projectSchema.find({
             id: req.query.id,
@@ -146,4 +152,16 @@ export const apiRoutes = async (router) => {
             res.send('err');
         });
     });
+
+
+    // get the user project tree with custom level
+    router.post('/get-project-tree', async (req, res) => {
+        const {userId, userName, projectName, level} = req.body;
+        const dirPath = path.join(__dirname, '../../files' ,userId + userName.split(' ')[0],projectName);
+        exec(`cd ${dirPath} && tree -L `+level+` -J --inodes`, (err, stdout, stderr) => {
+            if(err) throw err;
+            res.send(JSON.parse(stdout)[0]);
+        })
+    });
+
 };
