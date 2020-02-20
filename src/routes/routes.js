@@ -156,12 +156,12 @@ export const apiRoutes = async (router) => {
 
     // get the user project tree with custom level
     router.post('/get-project-tree', async (req, res) => {
-        const {userId, userName, projectName, level, currPath} = req.body;
-        const dirPath = path.join(__dirname, '../../files' ,userId + userName.split(' ')[0], projectName, currPath);
-        exec(`cd ${dirPath} && tree -L ${level} -J --inodes`, (err, stdout, stderr) => {
-            if(err) throw err;
-            res.send(JSON.parse(stdout)[0]);
-        })
+        const {userId, userName, projectName, level, currPath} = req.body.params.data;
+        const dirPath = path.join(__dirname, '../../files', userId + userName.split(' ')[0], projectName, currPath);
+        exec(`cd ${dirPath} && tree -L ${level} -J -D --inodes`, (err, stdout, stderr) => {
+            if (err) throw err;
+            res.send(JSON.parse(stdout)[0].contents);
+        });
+        
     });
-
 };
